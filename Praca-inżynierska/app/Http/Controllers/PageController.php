@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 class PageController extends Controller
 {
+    public function addCar()
+    {
+        return view('pages.car');
+    }
+
+
     /**
      * Display icons page
      *
      * @return \Illuminate\View\View
      */
+
     public function icons()
     {
         return view('pages.icons');

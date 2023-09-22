@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
+use App\Models\Role;
 use Auth;
 
 class RoleCheckMiddleware
@@ -19,11 +20,15 @@ class RoleCheckMiddleware
     {
         if(Auth::check()){
 
-            if(Auth::user()->roles()->where('user_id', '=', $user)->get() == '2'){ //DOKOŃCZYĆ
+            // $user = User::find(2);
+            // $user->roles()->detach(1);
+            //Auth::user()->roles()->sync(1);
+
+            if(Auth::user()->roles()->where('role_name','user')->exists()){
 
                 return $next($request);
 
-            } else if(Auth::user()->name == 'Admin Admin'){
+            } else if(Auth::user()->roles()->where('role_name','admin')->exists()){
 
                 return redirect('/dashboard');
 

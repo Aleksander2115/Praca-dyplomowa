@@ -21,6 +21,16 @@ class Car extends Model
         'license_plate_num',
     ];
 
+    /**
+     * Get the user that owns the Car
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     // /**
     //  * The attributes that should be cast.
     //  *

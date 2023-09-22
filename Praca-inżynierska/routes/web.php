@@ -26,6 +26,15 @@ Route::get('/userPage', function () {
     return view('userPage');
 })->middleware(['auth', 'verified', 'roleCheck'])->name('userPage');
 
+Route::get('/car', function () {
+    return view('pages.car');
+})->middleware(['auth', 'verified', 'roleCheck'])->name('addCarView');
+
+Route::middleware('auth')->group(function () {
+    Route::put('/car', [CarController::class, 'addCar'])->name('addCar');
+    //Route::get('/car', [CarController::class, 'deleteCar'])->name('car.delete');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -45,6 +54,7 @@ Auth::routes();
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
+        Route::get('addCar', ['as' => 'pages.addCar', 'uses' => 'App\Http\Controllers\PageController@addCar']);
 		Route::get('icons', ['as' => 'pages.icons', 'uses' => 'App\Http\Controllers\PageController@icons']);
 		Route::get('maps', ['as' => 'pages.maps', 'uses' => 'App\Http\Controllers\PageController@maps']);
 		Route::get('notifications', ['as' => 'pages.notifications', 'uses' => 'App\Http\Controllers\PageController@notifications']);

@@ -5,6 +5,12 @@
             <a href="#" class="simple-text logo-normal">{{ __('Black Dashboard') }}</a>
         </div>
         <ul class="nav">
+            <li @if ($pageSlug == 'addCarView') class="active " @endif>
+                <a href="{{ route('addCarView') }}">
+                    <i class="tim-icons icon-simple-add"></i>
+                    <p>{{ __('Add Car') }}</p>
+                </a>
+            </li>
             <li @if ($pageSlug == 'dashboard') class="active " @endif>
                 <a href="{{ route('home') }}">
                     <i class="tim-icons icon-chart-pie-36"></i>

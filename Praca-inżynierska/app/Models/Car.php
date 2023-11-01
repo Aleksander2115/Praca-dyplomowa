@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Car extends Model
 {
@@ -15,10 +16,11 @@ class Car extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'user_id',
         'brand',
         'model',
         'year_of_pr',
-        'license_plate_num',
+        'licence_plate_num',
     ];
 
     /**
@@ -30,14 +32,4 @@ class Car extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    // /**
-    //  * The attributes that should be cast.
-    //  *
-    //  * @var array<string, string>
-    //  */
-    // protected $casts = [
-    //     'email_verified_at' => 'datetime',
-    //     'password' => 'hashed',
-    // ];
 }

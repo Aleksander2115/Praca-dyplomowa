@@ -5,12 +5,47 @@
             <a href="#" class="simple-text logo-normal">{{ __('Black Dashboard') }}</a>
         </div>
         <ul class="nav">
-            <li @if ($pageSlug == 'addCarView') class="active " @endif>
-                <a href="{{ route('addCarView') }}">
-                    <i class="tim-icons icon-simple-add"></i>
-                    <p>{{ __('Add Car') }}</p>
-                </a>
-            </li>
+            @if (Auth::user()->roles()->where('role_name', 'user')->exists())
+                <li class="active ">
+                    <a href="{{ route('userPage') }}">
+                        <i class="tim-icons icon-bank"></i>
+                        <p>{{ __('Home') }}</p>
+                    </a>
+                </li>
+
+                <li class="active ">
+                    <a href="{{ route('userCars') }}">
+                        <i class="tim-icons icon-bus-front-12"></i>
+                        <p>{{ __('Cars') }}</p>
+                    </a>
+                </li>
+
+                <li class="active ">
+                    <a href="{{ route('addStationView') }}">
+                        <i class="tim-icons icon-simple-add"></i>
+                        <p>{{ __('Suggest Station') }}</p>
+                    </a>
+                </li>
+            @elseif (Auth::user()->roles()->where('role_name', 'mod')->exists())
+                <li class="active ">
+                    <a href="{{ route('modPage') }}">
+                        <i class="tim-icons icon-bank"></i>
+                        <p>{{ __('Home') }}</p>
+                    </a>
+                </li>
+                <li class="active ">
+                    <a href="{{ route('addStationView') }}">
+                        <i class="tim-icons icon-simple-add"></i>
+                        <p>{{ __('Add Station') }}</p>
+                    </a>
+                </li>
+                <li class="active ">
+                    <a href="{{ route('station_requests') }}">
+                        <i class="tim-icons icon-simple-add"></i>
+                        <p>{{ __('Requests') }}</p>
+                    </a>
+                </li>
+            @endif
             <li @if ($pageSlug == 'dashboard') class="active " @endif>
                 <a href="{{ route('home') }}">
                     <i class="tim-icons icon-chart-pie-36"></i>

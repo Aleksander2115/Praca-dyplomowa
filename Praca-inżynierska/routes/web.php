@@ -1,7 +1,12 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\AdminPageController;
+use App\Http\Controllers\ChargingStationController;
+use App\Http\Controllers\QueueController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Charging_station;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,16 +28,43 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/userPage', function () {
-    return view('userPage');
-})->middleware(['auth', 'verified', 'roleCheck'])->name('userPage');
 
-Route::get('/car', function () {
-    return view('pages.car');
-})->middleware(['auth', 'verified', 'roleCheck'])->name('addCarView');
+    $charStat = Charging_station::all()->where('is_verified', '1');
+    return view('userPage', ['charStat' => $charStat]);
 
-Route::middleware('auth')->group(function () {
-    Route::put('/car', [CarController::class, 'addCar'])->name('addCar');
-    //Route::get('/car', [CarController::class, 'deleteCar'])->name('car.delete');
+})->middleware(['auth', 'verified', 'roleCheck:user'])->name('userPage');
+
+Route::middleware(['auth', 'verified', 'roleCheck:admin'])->group(function () {
+    Route::get('/adminPage', [AdminPageController::class, 'adminRolesView'])->name('adminPage');
+    Route::patch('{user}', [AdminPageController::class, 'changeToAdmin'])->name('changeToAdmin');
+    Route::patch('/adminPage/{user}', [AdminPageController::class, 'changeToUser'])->name('changeToUser');
+    Route::post('/adminPage/{user}', [AdminPageController::class, 'changeToMod'])->name('changeToMod');
+});
+
+Route::middleware(['auth', 'verified', 'roleCheck:mod'])->group(function () {
+    Route::get('/modPage', [ChargingStationController::class, 'modPageView'])->name('modPage');
+    Route::patch('/charging_station/{charging_station}', [ChargingStationController::class, 'editStationView'])->name('editStationView');
+    Route::put('/charging_station/{charging_station}', [ChargingStationController::class, 'updateStation'])->name('updateStation');
+    Route::delete('/charging_station/{charging_station}', [ChargingStationController::class, 'deleteStation'])->name('deleteStation');
+    Route::put('{charging_station}', [ChargingStationController::class, 'verifyStation'])->name('verifyStation');
+    Route::get('/pages/station_requests', [ChargingStationController::class, 'stationRequestView'])->name('station_requests');
+});
+
+Route::group(['roleCheck' => ['role:mod|user']], function () {
+    Route::post('/charging_station', [ChargingStationController::class, 'addStation'])->name('addStation');
+    Route::get('/pages/charging_station', [ChargingStationController::class, 'addStationView'])->name('addStationView');
+});
+
+Route::middleware(['auth', 'verified', 'roleCheck:user'])->group(function () {
+    Route::get('/pages/userCars', [CarController::class, 'userCarsView'])->name('userCars');
+    Route::get('/pages/car', [CarController::class, 'addCarView'])->name('addCarView');
+    Route::post('/car', [CarController::class, 'addCar'])->name('addCar');
+    Route::delete('/car/{car}', [CarController::class, 'deleteCar'])->name('deleteCar');
+    Route::patch('/car/{car}', [CarController::class, 'editCar'])->name('editCar');
+    Route::put('/car/{car}', [CarController::class, 'updateCar'])->name('updateCar');
+    Route::get('/queuePage/{charging_station}', [QueueController::class, 'queueView'])->name('queueView');
+    Route::post('/queuePage/{charging_station}', [QueueController::class, 'enroll'])->name('enroll');
+    Route::delete('/queuePage/{charging_station}', [QueueController::class, 'leave'])->name('leave');
 });
 
 Route::middleware('auth')->group(function () {
@@ -54,7 +86,6 @@ Auth::routes();
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
-        Route::get('addCar', ['as' => 'pages.addCar', 'uses' => 'App\Http\Controllers\PageController@addCar']);
 		Route::get('icons', ['as' => 'pages.icons', 'uses' => 'App\Http\Controllers\PageController@icons']);
 		Route::get('maps', ['as' => 'pages.maps', 'uses' => 'App\Http\Controllers\PageController@maps']);
 		Route::get('notifications', ['as' => 'pages.notifications', 'uses' => 'App\Http\Controllers\PageController@notifications']);

@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -24,6 +25,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'sign_up_time',
+        'start_time',
+        'end_time',
     ];
 
     /**
@@ -46,6 +50,15 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'user_role')->withTimestamps();
     }
 
+    /**
+     * Get the queue that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function queue(): BelongsTo
+    {
+        return $this->belongsTo(Queue::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

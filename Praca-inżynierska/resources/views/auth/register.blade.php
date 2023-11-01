@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-5 ml-auto">
+        {{-- <div class="col-md-5 ml-auto">
             <div class="info-area info-horizontal mt-5">
                 <div class="icon icon-warning">
                     <i class="tim-icons icon-wifi"></i>
@@ -36,8 +36,8 @@
                     </p>
                 </div>
             </div>
-        </div>
-        <div class="col-md-7 mr-auto">
+        </div> --}}
+        <div class="col-lg-7 col-md-6 ml-auto mr-auto">
             <div class="card card-register card-white">
                 <div class="card-header">
                     <img class="card-img" src="{{ asset('black') }}/img/card-primary.png" alt="Card image">

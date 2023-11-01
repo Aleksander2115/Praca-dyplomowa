@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\User;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -28,7 +29,27 @@ class LoginController extends Controller
      * @var string
      */
 
-    protected $redirectTo = RouteServiceProvider::HOME;
+    //protected $redirectTo = RouteServiceProvider::HOME;
+
+    protected $redirectTo;
+
+    public function redirectTo() {
+
+        if(Auth::user()->roles()->where('role_name','user')->exists()) {
+            $this->redirectTo = route('userPage');
+            return $this->redirectTo;
+        } else if(Auth::user()->roles()->where('role_name','admin')->exists()){
+            $this->redirectTo = route('adminPage');
+            return $this->redirectTo;
+        } else if(Auth::user()->roles()->where('role_name','mod')->exists()){
+            $this->redirectTo = route('modPage');
+            return $this->redirectTo;
+        } else {
+            $this->redirectTo = '/homePage';
+            return $this->redirectTo;
+        }
+
+    }
 
 
     /**

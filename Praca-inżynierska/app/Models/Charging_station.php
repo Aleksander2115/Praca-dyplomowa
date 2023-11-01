@@ -2,15 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class User extends Authenticatable
+class Charging_station extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -23,5 +21,16 @@ class User extends Authenticatable
         'street',
         'street_number',
         'number_of_chargers',
+        'is_verified',
     ];
+
+    /**
+     * Get all of the queues for the Charging_station
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function queues(): HasMany
+    {
+        return $this->hasMany(Queue::class);
+    }
 }

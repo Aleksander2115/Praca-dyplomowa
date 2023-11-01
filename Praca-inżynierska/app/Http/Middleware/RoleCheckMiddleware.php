@@ -16,33 +16,12 @@ class RoleCheckMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, $role): Response
     {
-        if(Auth::check()){
-
-            // $user = User::find(2);
-            // $user->roles()->detach(1);
-            //Auth::user()->roles()->sync(1);
-
-            if(Auth::user()->roles()->where('role_name','user')->exists()){
-
-                return $next($request);
-
-            } else if(Auth::user()->roles()->where('role_name','admin')->exists()){
-
-                return redirect('/dashboard');
-
-            } else {
-
-                return redirect('/homePage')->with('message', 'Brak dostępu!');
-
-            }
+        if(Auth::check() && Auth::user()->roles()->where('role_name', $role)->exists()){
+            return $next($request);
         } else {
-
-            return redirect('/auth/login')->with('message', 'Zaloguj się!');
-
+            return redirect('/homePage');
         }
-
-        return $next($request);
     }
 }

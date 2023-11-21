@@ -23,6 +23,7 @@ class CarController extends Controller
             'model' => $request->model,
             'year_of_pr' => $request->year_of_production,
             'licence_plate_num' => $request->licence_plate_number,
+            'plug_type' => $request->plug_type
         ]);
         Auth::user()->cars()->save($car);
 
@@ -33,7 +34,7 @@ class CarController extends Controller
 
         $car->delete();
 
-        return redirect()->route('userCars');
+        return back();
     }
 
     public function editCar(Car $car){
@@ -47,6 +48,7 @@ class CarController extends Controller
             'model' => $request->model,
             'year_of_pr' => $request->year_of_production,
             'licence_plate_num' => $request->licence_plate_number,
+            'plug_type' => $request->plug_type,
             'updated_at' => now()
         ]);
 

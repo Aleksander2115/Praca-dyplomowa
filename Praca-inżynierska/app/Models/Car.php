@@ -21,6 +21,7 @@ class Car extends Model
         'model',
         'year_of_pr',
         'licence_plate_num',
+        'plug_type',
     ];
 
     /**

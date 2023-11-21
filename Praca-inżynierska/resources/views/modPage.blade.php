@@ -41,6 +41,9 @@
                                 <th class="text-center">
                                     Is verified
                                 </th>
+                                <th class="text-center">
+                                    ---
+                                </th>
                                 <th class="text-right">
                                     Options
                                 </th>
@@ -62,11 +65,15 @@
                                     {{ $charging_station->street_number }}
                                 </td>
                                 <td class="text-center">
-                                    {{ $charging_station->number_of_chargers }}
+                                    {{ $charging_station->number_of_charging_points }}
                                 </td>
                                 <td class="text-center">
                                     {{ $charging_station->is_verified }}
                                 </td>
+                                <td class="text-center">
+                                    ---
+                                </td>
+
                                 <td class="td-actions text-right">
                                     <form method="post" action="{{ route('editStationView', $charging_station->id) }}">
                                         @csrf

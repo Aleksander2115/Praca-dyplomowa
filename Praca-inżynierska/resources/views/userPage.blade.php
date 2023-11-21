@@ -15,7 +15,7 @@
     </div>
 
     <div class="col-lg-12 col-md-12">
-        <div class="card card-tasks">
+        <div class="card ">
             <div class="card-body ">
                 <div class="table-full-width table-responsive">
                     <table class="table">
@@ -34,7 +34,10 @@
                                     Street number
                                 </th>
                                 <th class="text-center">
-                                    Number of chargers
+                                    Number of charging points
+                                </th>
+                                <th class="text-center">
+                                    More info
                                 </th>
                                 <th class="text-center">
                                     Map
@@ -60,15 +63,18 @@
                                         {{ $cs->street_number }}
                                     </td>
                                     <td class="text-center">
-                                        {{ $cs->number_of_chargers }}
+                                        {{ $cs->number_of_charging_points }}
+                                    </td>
+                                    <td class="text-center">
+
                                     </td>
                                     <td class="td-actions text-center">
-                                        <a href="{{ 'https://www.google.com/maps/place/' . $cs->postcode . " " . $cs->city . " " . $cs->street}}" class="btn btn-link" target="_blank">
+                                        <a href="{{ 'https://www.google.com/maps/place/' . $cs->postcode . " " . $cs->city . " " . $cs->street}}" class="btn btn-info btn-icon" target="_blank">
                                             <i class="tim-icons icon-square-pin"></i>
                                         </a>
                                     </td>
                                     <td class="td-actions text-center">
-                                        <a href="{{ route('queueView', [$cs]) }}">
+                                        <a href="{{ route('queueView', [$cs]) }}" class="btn btn-danger btn-icon">
                                             <i class="tim-icons icon-bullet-list-67"></i>
                                         </a>
                                     </td>

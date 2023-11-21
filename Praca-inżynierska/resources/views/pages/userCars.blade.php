@@ -37,6 +37,9 @@
                                 <th class="text-center">
                                     Licence plate
                                 </th>
+                                <th class="text-center">
+                                    Plug type
+                                </th>
                                 <th class="text-right">
                                     Options
                                 </th>
@@ -56,6 +59,9 @@
                                 </td>
                                 <td class="text-center">
                                     {{ $car->licence_plate_num }}
+                                </td>
+                                <td class="text-center">
+                                    {{ $car->plug_type }}
                                 </td>
                                 <td class="td-actions text-right">
                                     <form method="post" action="{{ route('deleteCar', $car->id) }}">

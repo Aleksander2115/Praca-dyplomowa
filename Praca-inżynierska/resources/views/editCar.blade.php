@@ -29,15 +29,22 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label>{{ __('Year of production') }}</label>
                             <input type="text" name="year_of_production" class="form-control{{ $errors->has('year_of_production') ? ' is-invalid' : '' }}" placeholder="{{ __('Year of production') }}" value="{{$car->year_of_pr}}">
                             @include('alerts.feedback', ['field' => 'year_of_production'])
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label>{{ __('Licence plate number') }}</label>
                             <input type="text" name="licence_plate_number" class="form-control{{ $errors->has('licence_plate_number') ? ' is-invalid' : '' }}" placeholder="{{ __('Licence plate number') }}" value="{{$car->licence_plate_num}}">
                             @include('alerts.feedback', ['field' => 'licence_plate_number'])
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="plug_type">{{ __('Plug type') }}</label>
+                            <select class="form-control" id="plug_type" name="plug_type">
+                                <option>X</option>
+                                <option>D</option>
+                            </select>
                         </div>
                     </div>
 

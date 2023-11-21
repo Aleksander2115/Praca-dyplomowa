@@ -62,7 +62,7 @@
                                     {{ $charging_station->street_number }}
                                 </td>
                                 <td class="text-center">
-                                    {{ $charging_station->number_of_chargers }}
+                                    {{ $charging_station->number_of_charging_points }}
                                 </td>
                                 <td class="text-center">
                                     {{ $charging_station->is_verified }}

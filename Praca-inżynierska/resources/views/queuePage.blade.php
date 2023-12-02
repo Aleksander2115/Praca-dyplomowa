@@ -89,6 +89,9 @@
                                         User
                                     </th>
                                     <th class="text-center">
+                                        Car
+                                    </th>
+                                    <th class="text-center">
                                         Signed at
                                     </th>
                                     <th class="text-center">
@@ -104,6 +107,9 @@
                                     <tr>
                                         <td class="text-center">
                                             {{ $u->name }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ $u->cars->where('in_use','1')->first()->brand }}
                                         </td>
                                         <td class="text-center">
                                             {{ $u->sign_up_time }}
@@ -219,6 +225,9 @@
                                         User
                                     </th>
                                     <th class="text-center">
+                                        Car
+                                    </th>
+                                    <th class="text-center">
                                         Signed at
                                     </th>
                                     <th class="text-center">
@@ -234,6 +243,9 @@
                                     <tr>
                                         <td class="text-center">
                                             {{ $u->name }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ $u->cars->where('in_use','1')->first()->brand }}
                                         </td>
                                         <td class="text-center">
                                             {{ $u->sign_up_time }}
@@ -281,7 +293,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-lg-10">
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#queueModal" >
+                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#queueModal2" >
                                 <h3 class="card-title">Enroll <i class="tim-icons icon-double-right text-success"></i></h3>
                             </button>
                         </div>
@@ -296,12 +308,12 @@
                         </div>
                     </div>
 
-                    <div class="modal fade" id="queueModal" tabindex="-1" role="dialog" aria-labelledby="queueModal" aria-hidden="true">
+                    <div class="modal fade" id="queueModal2" tabindex="-1" role="dialog" aria-labelledby="queueModal2" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <div class="text-left">
-                                        <h3 class="modal-title" id="queueModal">{{ __('Determine your charging time') }}</h3>
+                                        <h3 class="modal-title" id="queueModal2">{{ __('Determine your charging time') }}</h3>
                                     </div>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <i class="tim-icons icon-simple-remove"></i>
@@ -309,14 +321,14 @@
                                 </div>
 
                                 <div class="modal-body">
-                                    <form method="post" action="{{ route('enroll', $charging_station) }}" autocomplete="off">
+                                    <form method="post" action="{{ route('enroll2', $charging_station) }}" autocomplete="off">
                                         @csrf
                                         @method('post')
 
                                         @include('alerts.success')
 
-                                        <input type="datetime-local" id="start_time" name="start_time" value="{{ Carbon\Carbon::now()->toDateTimeString() }}" min="{{ date('Y-m-dTH:i') }}" max="{{ date('Y-m-dTH:i') }}">
-                                        <input type="datetime-local" id="end_time" name="end_time" value="2024-01-01T00:00" min="{{ date('Y-m-dTH:i') }}" max="{{ date('Y-m-dTH:i') }}">
+                                        <input type="datetime-local" id="start_time2" name="start_time2" value="{{ Carbon\Carbon::now()->toDateTimeString() }}" min="{{ date('Y-m-dTH:i') }}" max="{{ date('Y-m-dTH:i') }}">
+                                        <input type="datetime-local" id="end_time2" name="end_time2" value="2024-01-01T00:00" min="{{ date('Y-m-dTH:i') }}" max="{{ date('Y-m-dTH:i') }}">
 
                                         {{-- <div class="form-row">
                                             <div class="form-group col-md-6">
@@ -347,6 +359,9 @@
                                         User
                                     </th>
                                     <th class="text-center">
+                                        Car
+                                    </th>
+                                    <th class="text-center">
                                         Signed at
                                     </th>
                                     <th class="text-center">
@@ -358,19 +373,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($users as $u)
+                                @forelse ($users2 as $u2)
                                     <tr>
                                         <td class="text-center">
-                                            {{ $u->name }}
+                                            {{ $u2->name }}
                                         </td>
                                         <td class="text-center">
-                                            {{ $u->sign_up_time }}
+                                            {{ $u2->cars->where('in_use','1')->first()->brand }}
                                         </td>
                                         <td class="text-center">
-                                            {{ $u->start_time }}
+                                            {{ $u2->sign_up_time }}
                                         </td>
                                         <td class="text-center">
-                                            {{ $u->end_time }}
+                                            {{ $u2->start_time }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ $u2->end_time }}
                                         </td>
                                     </tr>
                                 @empty

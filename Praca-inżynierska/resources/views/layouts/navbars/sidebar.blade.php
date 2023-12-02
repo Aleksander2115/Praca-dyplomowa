@@ -1,8 +1,16 @@
 <div class="sidebar">
     <div class="sidebar-wrapper">
         <div class="logo">
-            <a href="#" class="simple-text logo-mini">{{ __('BD') }}</a>
-            <a href="#" class="simple-text logo-normal">{{ __('Black Dashboard') }}</a>
+            @if (Auth::user()->cars()->where('in_use','1')->exists())
+                <a class="simple-text logo-normal">Car in use: {{ Auth::user()->cars->where('in_use','1')->first()->brand }}
+                    {{ Auth::user()->cars->where('in_use','1')->first()->model }}
+                    {{ Auth::user()->cars->where('in_use','1')->first()->licence_plate_num }}
+                </a>
+            @else
+                <a href="{{ route('userCars') }}" class="simple-text logo-normal">
+                    Choose your car <i class="tim-icons icon-minimal-left"></i>
+                </a>
+            @endif
         </div>
         <ul class="nav">
             @if (Auth::user()->roles()->where('role_name', 'user')->exists())
@@ -59,7 +67,7 @@
                     <b class="caret mt-1"></b>
                 </a>
 
-                <div class="collapse show" id="laravel-examples">
+                <div class="collapse hide" id="laravel-examples">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug == 'profile') class="active " @endif>
                             <a href="{{ route('profile.edit')  }}">

@@ -37,7 +37,10 @@
                                     Number of charging points
                                 </th>
                                 <th class="text-center">
-                                    More info
+                                    Plug #1
+                                </th>
+                                <th class="text-center">
+                                    Plug #2
                                 </th>
                                 <th class="text-center">
                                     Map
@@ -66,7 +69,18 @@
                                         {{ $cs->number_of_charging_points }}
                                     </td>
                                     <td class="text-center">
-
+                                            Current: {{ $cs->charging_points->first()->type_of_electric_current }} <br>
+                                            Plug: {{ $cs->charging_points->first()->plug_type }} <br>
+                                            Power: {{ $cs->charging_points->first()->power }}
+                                    </td>
+                                    <td class="text-center">
+                                        @if ($cs->number_of_charging_points === 1)
+                                            ---
+                                        @elseif ($cs->number_of_charging_points === 2)
+                                        Current: {{ $cs->charging_points->skip(1)->take(1)->first()->type_of_electric_current }} <br>
+                                        Plug: {{ $cs->charging_points->skip(1)->take(1)->first()->plug_type }} <br>
+                                        Power: {{ $cs->charging_points->skip(1)->take(1)->first()->power }}
+                                        @endif
                                     </td>
                                     <td class="td-actions text-center">
                                         <a href="{{ 'https://www.google.com/maps/place/' . $cs->postcode . " " . $cs->city . " " . $cs->street}}" class="btn btn-info btn-icon" target="_blank">

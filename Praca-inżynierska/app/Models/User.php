@@ -55,9 +55,9 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function queue(): BelongsTo
+    public function charging_point(): BelongsTo
     {
-        return $this->belongsTo(Queue::class);
+        return $this->belongsTo(Charging_point::class);
     }
 
     /**

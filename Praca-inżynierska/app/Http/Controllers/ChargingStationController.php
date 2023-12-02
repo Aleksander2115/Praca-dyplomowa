@@ -12,6 +12,13 @@ use Auth;
 
 class ChargingStationController extends Controller
 {
+    public function userPageView(){
+
+        $charStat = Charging_station::all()->where('is_verified','1');
+
+        return view('userPage', ['charStat'=>$charStat]);
+    }
+
     public function modPageView(){
 
         $charging_stations = Charging_station::all()->where('is_verified', '1');

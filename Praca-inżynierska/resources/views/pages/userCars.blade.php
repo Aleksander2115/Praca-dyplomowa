@@ -26,6 +26,9 @@
                         <thead class=" text-primary">
                             <tr>
                                 <th class="text-center">
+                                    In use?
+                                </th>
+                                <th class="text-center">
                                     Brand
                                 </th>
                                 <th class="text-center">
@@ -48,6 +51,17 @@
                         <tbody>
                             @forelse (Auth::user()->cars as $car)
                             <tr>
+                                <td class="text_center">
+                                    @if ($car->in_use === 1)
+                                        <a href="{{ route('inUse', $car) }}">
+                                            <i class="tim-icons icon-check-2"></i>
+                                        </a>
+                                    @elseif ($car->in_use === 0)
+                                        <a href="{{ route('inUse', $car) }}">
+                                            <i class="tim-icons icon-simple-remove"></i>
+                                        </a>
+                                    @endif
+                                </td>
                                 <td class="text-center">
                                     {{ $car->brand }}
                                 </td>

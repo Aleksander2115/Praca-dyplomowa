@@ -27,12 +27,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/userPage', function () {
-
-    $charStat = Charging_station::all()->where('is_verified', '1');
-    return view('userPage', ['charStat' => $charStat]);
-
-})->middleware(['auth', 'verified', 'roleCheck:user'])->name('userPage');
 
 Route::middleware(['auth', 'verified', 'roleCheck:admin'])->group(function () {
     Route::get('/adminPage', [AdminPageController::class, 'adminRolesView'])->name('adminPage');
@@ -56,14 +50,17 @@ Route::group(['roleCheck' => ['role:mod|user']], function () {
 });
 
 Route::middleware(['auth', 'verified', 'roleCheck:user'])->group(function () {
+    Route::get('/userPage', [ChargingStationController::class, 'userPageView'])->name('userPage');
     Route::get('/pages/userCars', [CarController::class, 'userCarsView'])->name('userCars');
     Route::get('/pages/car', [CarController::class, 'addCarView'])->name('addCarView');
     Route::post('/car', [CarController::class, 'addCar'])->name('addCar');
     Route::delete('/car/{car}', [CarController::class, 'deleteCar'])->name('deleteCar');
     Route::patch('/car/{car}', [CarController::class, 'editCar'])->name('editCar');
     Route::put('/car/{car}', [CarController::class, 'updateCar'])->name('updateCar');
+    Route::any('/pages/userCars/car/{car}', [CarController::class, 'inUse'])->name('inUse');
     Route::get('/queuePage/{charging_station}', [QueueController::class, 'queueView'])->name('queueView');
-    Route::post('/queuePage/{charging_station}', [QueueController::class, 'enroll'])->name('enroll');
+    Route::post('/queuePage/{charging_station}/enroll', [QueueController::class, 'enroll'])->name('enroll');
+    Route::post('/queuePage/{charging_station}/enroll2', [QueueController::class, 'enroll2'])->name('enroll2');
     Route::delete('/queuePage/{charging_station}', [QueueController::class, 'leave'])->name('leave');
 });
 

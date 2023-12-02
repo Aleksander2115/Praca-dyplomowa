@@ -25,16 +25,6 @@ class Charging_station extends Model
         'is_verified',
     ];
 
-    /**
-     * Get all of the queues for the Charging_station
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function queues(): HasMany
-    {
-        return $this->hasMany(Queue::class);
-    }
-
     public function charging_points(): BelongsToMany
     {
         return $this->belongsToMany(Charging_point::class, 'charging_station_charging_point');

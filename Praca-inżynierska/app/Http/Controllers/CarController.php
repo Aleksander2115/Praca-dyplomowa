@@ -55,6 +55,22 @@ class CarController extends Controller
         return redirect()->route('userCars');
     }
 
+    public function inUse(Car $car){
+
+        if(count(Auth::user()->cars->where('in_use','1')) === 0){
+            if($car->in_use === 1){
+                $car->update(['in_use'=>'0']);
+            }else if($car->in_use === 0){
+                $car->update(['in_use'=>'1']);
+            }
+        } else{
+            $car->update(['in_use'=>'0']);
+        }
+
+
+        return back();
+    }
+
     public function userCarsView(){
         return view('pages.userCars');
     }

@@ -1,15 +1,27 @@
 <div class="sidebar">
     <div class="sidebar-wrapper">
         <div class="logo">
-            @if (Auth::user()->cars()->where('in_use','1')->exists())
-                <a class="simple-text logo-normal">Car in use: {{ Auth::user()->cars->where('in_use','1')->first()->brand }}
-                    {{ Auth::user()->cars->where('in_use','1')->first()->model }}
-                    {{ Auth::user()->cars->where('in_use','1')->first()->licence_plate_num }}
-                </a>
-            @else
-                <a href="{{ route('userCars') }}" class="simple-text logo-normal">
-                    Choose your car <i class="tim-icons icon-minimal-left"></i>
-                </a>
+            @if (Auth::user()->roles()->where('role_name', 'user')->exists())
+
+                @if (Auth::user()->cars()->where('in_use','1')->exists())
+                    <a class="simple-text logo-normal">Car in use: {{ Auth::user()->cars->where('in_use','1')->first()->brand }}
+                        {{ Auth::user()->cars->where('in_use','1')->first()->model }}
+                        {{ Auth::user()->cars->where('in_use','1')->first()->licence_plate_num }}
+                    </a>
+                @else
+                    <a href="{{ route('userCars') }}" class="simple-text logo-normal">
+                        Choose your car <i class="tim-icons icon-minimal-left"></i>
+                    </a>
+                @endif
+
+            @elseif(Auth::user()->roles()->where('role_name', 'admin')->exists())
+
+                <a class="simple-text logo-normal">Admin's page</a>
+
+            @elseif (Auth::user()->roles()->where('role_name', 'mod')->exists())
+
+                <a class="slimple-text logo-normal">Mod's page</a>
+
             @endif
         </div>
         <ul class="nav">

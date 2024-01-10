@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Car;
+use Illuminate\Support\Facades\Validator;
 use Auth;
 
 class CarController extends Controller
@@ -16,6 +17,17 @@ class CarController extends Controller
     }
 
     public function addCar(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'brand' => 'required|min:3|alpha:ascii',
+            'model' => 'required|min:3',
+            'year_of_production' => 'required|integer|digits:4',
+            'licence_plate_number' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
         $car = Car::create([
             'user_id' => Auth::user()->id,
@@ -27,14 +39,14 @@ class CarController extends Controller
         ]);
         Auth::user()->cars()->save($car);
 
-        return redirect()->route('userCars');
+        return redirect()->route('userCars')->with('status', 'Car successfully added');
     }
 
     public function deleteCar(Car $car){
 
         $car->delete();
 
-        return back();
+        return back()->with('alert', 'Car successfully deleted');
     }
 
     public function editCar(Car $car){
@@ -52,23 +64,22 @@ class CarController extends Controller
             'updated_at' => now()
         ]);
 
-        return redirect()->route('userCars');
+        return redirect()->route('userCars')->with('status', 'Car successfully updated');
     }
 
     public function inUse(Car $car){
 
         if(count(Auth::user()->cars->where('in_use','1')) === 0){
-            if($car->in_use === 1){
-                $car->update(['in_use'=>'0']);
-            }else if($car->in_use === 0){
-                $car->update(['in_use'=>'1']);
-            }
+            $car->update(['in_use'=>'1']);
         } else{
-            $car->update(['in_use'=>'0']);
+            $activeCar = Auth::user()->cars->where('in_use','1')->first();
+
+            $car->update(['in_use'=>'1']);
+            $activeCar->update(['in_use'=>'0']);
         }
 
 
-        return back();
+        return back()->with('status', 'Car in use set to: '.$car->brand.' '.$car->model);
     }
 
     public function userCarsView(){

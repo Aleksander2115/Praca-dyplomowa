@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use App\Models\Charging_station;
 use App\Models\Charging_point;
+use Illuminate\Support\Facades\Validator;
 
 use Auth;
 
@@ -30,7 +31,46 @@ class ChargingStationController extends Controller
         return view('pages.charging_station');
     }
 
+    public function filter(Request $request){
+
+        $charStat = Charging_station::all()->where('is_verified','1');
+
+
+        if($request->has('postcode'))
+            $filter = $charStat->where('postcode', $request->postcode);
+
+        if($request->is_available_now == 1){
+            foreach($charStat as $cs){
+
+                if(count($cs->charging_points) == 1){
+                    if(count($cs->charging_points->first()->users) == 0)
+                        $filter->push($cs);
+                } else {
+                    if (count($cs->charging_points->first()->users) == 0 || count($cs->charging_points->skip(1)->take(1)->first()->users) == 0)
+                        $filter->push($cs);
+                }
+            }
+        }
+
+
+        return view('userPage', ['charStat'=>$filter]);
+    }
+
     public function addStation(Charging_station $charging_station, Charging_point $charging_point, Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'postcode' => 'required|regex:/^[0-9]{2}-[0-9]{3}/',
+            'city' => 'required|string|min:3',
+            'street' => 'required|min:3',
+            'street_number' => 'required',
+        ],
+        [
+            'postcode.regex' => 'The postcode must be in 00-000 format'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
         if(Auth::user()->roles()->where('role_name', 'mod')->exists()){
             $charging_station = Charging_station::create([
@@ -70,7 +110,7 @@ class ChargingStationController extends Controller
                 $charging_station->charging_points()->attach($charging_point->id);
             }
 
-            return redirect()->route('modPage');
+            return redirect()->route('modPage')->with('status', 'Charging station successfully added');
 
         } else if(Auth::user()->roles()->where('role_name', 'user')->exists()){
             $charging_station = Charging_station::create([
@@ -110,7 +150,7 @@ class ChargingStationController extends Controller
                 $charging_station->charging_points()->attach($charging_point->id);
 
             }
-            return redirect()->route('userPage');
+            return redirect()->route('userPage')->with('status', 'Charging station successfully suggested');
         }
     }
 
@@ -122,6 +162,20 @@ class ChargingStationController extends Controller
     }
 
     public function updateStation(Charging_station $charging_station, Request $request){
+
+        // $validator = Validator::make($request->all(), [
+        //     'postcode' => 'required|regex:/^[0-9]{2}-[0-9]{3}/',
+        //     'city' => 'required|string|min:3',
+        //     'street' => 'required|min:3',
+        //     'street_number' => 'required',
+        // ],
+        // [
+        //     'postcode.regex' => 'The postcode must be in 00-000 format'
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return back()->withErrors($validator)->withInput();
+        // }
 
         $charging_station->update([
             'postcode' => $request->postcode,
@@ -158,7 +212,7 @@ class ChargingStationController extends Controller
             ]);
         }
 
-        return redirect()->route('modPage');
+        return redirect()->route('modPage')->with('status', 'Charging station successfully updated');
     }
 
     public function deleteStation(Charging_station $charging_station){
@@ -173,7 +227,7 @@ class ChargingStationController extends Controller
 
         $charging_station->delete();
 
-        return redirect()->route('modPage');
+        return redirect()->route('modPage')->with('alert', 'Charging station successfully deleted');
     }
 
     public function verifyStation(Charging_station $charging_station){
@@ -182,7 +236,7 @@ class ChargingStationController extends Controller
             'is_verified' => '1'
         ]);
 
-        return redirect()->route('station_requests');
+        return redirect()->route('station_requests')->with('status', 'Charging station successfully verified');
     }
 
     public function stationRequestView(){

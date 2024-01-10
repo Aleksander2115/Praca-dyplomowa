@@ -2,6 +2,24 @@
 
 @section('content')
 
+    @if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+
+        <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+            <i class="tim-icons icon-simple-remove"></i>
+        </button>
+    </div>
+    @elseif (session('alert'))
+    <div class="alert alert-danger">
+        {{ session('alert') }}
+
+        <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+            <i class="tim-icons icon-simple-remove"></i>
+        </button>
+    </div>
+    @endif
+
     <div class="header py-7 py-lg-8">
         <div class="container">
             <div class="header-body text-center mb-7">
@@ -298,7 +316,7 @@
                             </button>
                         </div>
                         <div class="col-lg-2">
-                            <form method="post" action="{{ route('leave', $charging_station) }}">
+                            <form method="post" action="{{ route('leave2', $charging_station) }}">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" rel="tooltip" class="btn btn-link">

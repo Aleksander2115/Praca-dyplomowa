@@ -90,15 +90,39 @@ class QueueController extends Controller
 
     public function leave(Charging_station $charging_station){
 
-        Auth::user()->update([
-            'sign_up_time' => null,
-            'start_time' => null,
-            'end_time' => null,
-        ]);
+        if(Auth::user()->charging_point->id == $charging_station->charging_points->first()->id){
 
-        Auth::user()->charging_point()->dissociate();//do testu ale niby działa
-        Auth::user()->save();//do testu ale niby działa
+            Auth::user()->update([
+                'sign_up_time' => null,
+                'start_time' => null,
+                'end_time' => null,
+            ]);
 
-        return back();
+            Auth::user()->charging_point()->dissociate();
+            Auth::user()->save();
+
+            return redirect()->route("queueView", $charging_station)->with('status', 'Successfully left the queue');
+        } else {
+            return redirect()->route("queueView", $charging_station)->with('alert', 'You are not enrolled in this queue');
+        }
+    }
+
+    public function leave2(Charging_station $charging_station){
+
+        if(Auth::user()->charging_point->id == $charging_station->charging_points->skip(1)->take(1)->first()->id){
+
+            Auth::user()->update([
+                'sign_up_time' => null,
+                'start_time' => null,
+                'end_time' => null,
+            ]);
+
+            Auth::user()->charging_point()->dissociate();
+            Auth::user()->save();
+
+            return redirect()->route("queueView", $charging_station)->with('status', 'Successfully left the queue');
+        } else {
+            return redirect()->route("queueView", $charging_station)->with('alert', 'You are not enrolled in this queue');
+        }
     }
 }

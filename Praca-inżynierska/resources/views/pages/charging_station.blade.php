@@ -13,6 +13,7 @@
                     <h3 class="title">{{ __('Add a charging station') }}</h3>
                 </div>
             @endif
+
             <form method="post" action="{{ route('addStation') }}" autocomplete="off">
                 <div class="card-body">
 
@@ -24,13 +25,13 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label>{{ __('Postcode') }}</label>
-                            <input type="text" name="postcode" class="form-control{{ $errors->has('postcode') ? ' is-invalid' : '' }}" placeholder="{{ __('Postcode') }}">
+                            <input type="text" name="postcode" class="form-control{{ $errors->has('postcode') ? ' is-invalid' : '' }}" placeholder="{{ __('Postcode') }}" value="{{ old('postcode') }}">
                             @include('alerts.feedback', ['field' => 'postcode'])
                         </div>
 
                         <div class="form-group col-md-8">
                             <label>{{ __('City') }}</label>
-                            <input type="text" name="city" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" placeholder="{{ __('City') }}">
+                            <input type="text" name="city" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" placeholder="{{ __('City') }}" value="{{ old('city') }}">
                             @include('alerts.feedback', ['field' => 'city'])
                         </div>
                     </div>
@@ -39,13 +40,13 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label>{{ __('Street') }}</label>
-                            <input type="text" name="street" class="form-control{{ $errors->has('street') ? ' is-invalid' : '' }}" placeholder="{{ __('Street') }}">
+                            <input type="text" name="street" class="form-control{{ $errors->has('street') ? ' is-invalid' : '' }}" placeholder="{{ __('Street') }}" value="{{ old('street') }}">
                             @include('alerts.feedback', ['field' => 'street'])
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>{{ __('Street number') }}</label>
-                            <input type="text" name="street_number" class="form-control{{ $errors->has('street_number') ? ' is-invalid' : '' }}" placeholder="{{ __('Street number') }}">
+                            <input type="text" name="street_number" class="form-control{{ $errors->has('street_number') ? ' is-invalid' : '' }}" placeholder="{{ __('Street number') }}" value="{{ old('street_number') }}">
                             @include('alerts.feedback', ['field' => 'street_number'])
                         </div>
 

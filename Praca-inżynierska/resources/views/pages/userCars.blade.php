@@ -13,6 +13,24 @@
         </div>
     </div>
 
+    @if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+
+        <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+            <i class="tim-icons icon-simple-remove"></i>
+        </button>
+    </div>
+    @elseif (session('alert'))
+    <div class="alert alert-danger">
+        {{ session('alert') }}
+
+        <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+            <i class="tim-icons icon-simple-remove"></i>
+        </button>
+    </div>
+    @endif
+
     <div class="header-body text-center mb-7">
         <div class="card ">
             <div class="card-header">

@@ -61,7 +61,9 @@ Route::middleware(['auth', 'verified', 'roleCheck:user'])->group(function () {
     Route::get('/queuePage/{charging_station}', [QueueController::class, 'queueView'])->name('queueView');
     Route::post('/queuePage/{charging_station}/enroll', [QueueController::class, 'enroll'])->name('enroll');
     Route::post('/queuePage/{charging_station}/enroll2', [QueueController::class, 'enroll2'])->name('enroll2');
-    Route::delete('/queuePage/{charging_station}', [QueueController::class, 'leave'])->name('leave');
+    Route::delete('/queuePage/{charging_station}/leave', [QueueController::class, 'leave'])->name('leave');
+    Route::delete('/queuePage/{charging_station}/leave2', [QueueController::class, 'leave2'])->name('leave2');
+    Route::post('/userPage', [ChargingStationController::class, 'filter'])->name('filter');
 });
 
 Route::middleware('auth')->group(function () {

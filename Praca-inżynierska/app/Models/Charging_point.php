@@ -22,6 +22,7 @@ class Charging_point extends Model
         'type_of_electric_current',
         'plug_type',
         'power',
+        'rate_per_kwh',
     ];
 
     public function charging_stations(): BelongsToMany

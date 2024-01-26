@@ -17,12 +17,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav ml-auto">
-                <li class="search-bar input-group">
+                {{-- <li class="search-bar input-group">
                     <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal"><i class="tim-icons icon-zoom-split"></i>
                         <span class="d-lg-none d-md-block">{{ __('Search') }}</span>
                     </button>
-                </li>
-                <li class="dropdown nav-item">
+                </li> --}}
+                {{-- <li class="dropdown nav-item">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <div class="notification d-none d-lg-block d-xl-block"></div>
                         <i class="tim-icons icon-sound-wave"></i>
@@ -45,7 +45,76 @@
                             <a href="#" class="nav-item dropdown-item">{{ __('Another one') }}</a>
                         </li>
                     </ul>
+                </li> --}}
+
+                @if (Auth::user()->charging_point != null)
+
+                <li class="dropdown nav-item">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <div class="notification d-none d-lg-block d-xl-block"></div>
+                        <i class="tim-icons icon-bell-55"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
+                        <li class="nav-link">
+                            <a href="{{ route('queueView', Auth::user()->charging_point->charging_stations->first()->id) }}" class="nav-item dropdown-item">{{ __('Go to your queue') }}</a>
+                        </li>
+                    </ul>
                 </li>
+
+                @else
+
+                @endif
+
+                <li class="dropdown nav-item">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <i class="tim-icons icon-wallet-43"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
+                        <li class="nav-link">
+                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#walletModal" >
+                                Add money <i class="tim-icons icon-simple-add text-danger"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Modal -->
+                <div class="modal fade" id="walletModal" tabindex="-1" aria-labelledby="walletModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="w-55 m-auto">
+                                    <h4 class="modal-title" id="walletModalLabel">Enter the amount of money: </h4>
+                                </div>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                <form method="post" action="{{ route('addMoney') }}" autocomplete="off">
+                                    @csrf
+                                    @method('post')
+
+                                    <div class="w-25 m-auto">
+                                        <input type="number" id="money" name="money" min="1" max="9999" step="0.50">
+                                    </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary w-25" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-fill btn-primary w-25">{{ __('Add!') }}</button>
+                            </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+
+                <li class="dropdown nav-item">
+                    <p class="d-lg-block"> Balance <br> {{ Auth::user()->money }} </p>
+                </li>
+
+
                 <li class="dropdown nav-item">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <div class="photo">

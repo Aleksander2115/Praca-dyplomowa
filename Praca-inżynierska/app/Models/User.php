@@ -28,6 +28,7 @@ class User extends Authenticatable
         'sign_up_time',
         'start_time',
         'end_time',
+        'money',
     ];
 
     /**

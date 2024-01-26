@@ -5,6 +5,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\AdminPageController;
 use App\Http\Controllers\ChargingStationController;
 use App\Http\Controllers\QueueController;
+use App\Http\Controllers\ModController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Charging_station;
 
@@ -20,7 +21,7 @@ use App\Models\Charging_station;
 */
 
 Route::get('/', function () {
-    return view('homePage');
+    return view('index');
 });
 
 Route::get('/dashboard', function () {
@@ -42,11 +43,16 @@ Route::middleware(['auth', 'verified', 'roleCheck:mod'])->group(function () {
     Route::delete('/charging_station/{charging_station}', [ChargingStationController::class, 'deleteStation'])->name('deleteStation');
     Route::put('{charging_station}', [ChargingStationController::class, 'verifyStation'])->name('verifyStation');
     Route::get('/pages/station_requests', [ChargingStationController::class, 'stationRequestView'])->name('station_requests');
+    Route::get('/pages/terms', [ModController::class, 'termsPageView'])->name('termsPage');
+    Route::put('/pages/terms', [ModController::class, 'addTerm'])->name('addTerm');
+    Route::patch('/pages/terms/{term}', [ModController::class, 'editTerm'])->name('editTerm');
+    Route::delete('/pages/terms/{term}', [ModController::class, 'deleteTerm'])->name('deleteTerm');
 });
 
 Route::group(['roleCheck' => ['role:mod|user']], function () {
     Route::post('/charging_station', [ChargingStationController::class, 'addStation'])->name('addStation');
     Route::get('/pages/charging_station', [ChargingStationController::class, 'addStationView'])->name('addStationView');
+    Route::get('/pages/terms', [ModController::class, 'termsPageView'])->name('termsPage');
 });
 
 Route::middleware(['auth', 'verified', 'roleCheck:user'])->group(function () {
@@ -64,6 +70,7 @@ Route::middleware(['auth', 'verified', 'roleCheck:user'])->group(function () {
     Route::delete('/queuePage/{charging_station}/leave', [QueueController::class, 'leave'])->name('leave');
     Route::delete('/queuePage/{charging_station}/leave2', [QueueController::class, 'leave2'])->name('leave2');
     Route::post('/userPage', [ChargingStationController::class, 'filter'])->name('filter');
+    Route::post('/addMoney', [QueueController::class, 'addMoney'])->name('addMoney');
 });
 
 Route::middleware('auth')->group(function () {

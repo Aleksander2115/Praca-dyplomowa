@@ -69,17 +69,23 @@ class CarController extends Controller
 
     public function inUse(Car $car){
 
+        $activeCar = Auth::user()->cars->where('in_use','1')->first();
+
         if(count(Auth::user()->cars->where('in_use','1')) === 0){
             $car->update(['in_use'=>'1']);
         } else{
-            $activeCar = Auth::user()->cars->where('in_use','1')->first();
 
-            $car->update(['in_use'=>'1']);
-            $activeCar->update(['in_use'=>'0']);
+            if($activeCar->id == $car->id){
+                $activeCar->update(['in_use'=>'0']);
+
+                return redirect()->route('userCars')->with('alert', 'Car has been unselected');
+            } else {
+                $activeCar->update(['in_use'=>'0']);
+                $car->update(['in_use'=>'1']);
+            }
         }
 
-
-        return back()->with('status', 'Car in use set to: '.$car->brand.' '.$car->model);
+        return redirect()->route('userCars')->with('status', 'Car in use set to: '.$car->brand.' '.$car->model);
     }
 
     public function userCarsView(){

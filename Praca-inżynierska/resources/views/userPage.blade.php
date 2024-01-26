@@ -32,36 +32,41 @@
     </div>
     @endif
 
-        <div class="card ">
-
                 <form method="post" action="{{ route('filter') }}" autocomplete="off" id="filters">
                     @csrf
                     @method('post')
 
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label>{{ __('FILTER BY POSTCODE ') }}</label>
+                    <div class="row w-35 m-auto">
+                        <div class="w-30 m-auto">
+                            <label>
+                                <font color="#ff00ff"> FILTER BY POSTCODE</font>
+                            </label>
                             <input type="text" name="postcode" class="form-control" placeholder="Postcode 00-000">
                         </div>
-
                         <div class="form-group col-md-4">
-                            <label> {{ __('Show available') }} </label>
-                            <div class="form-check form-check-radio form-check-inline">
+                            <label> <font color="#ff00ff"> SHOW AVAILABLE</font> </label>
+
+                            <div class="form-check">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="is_available_now" value="1">
-                                    <span class="form-check-sign"></span>
+                                    <input class="form-check-input" type="checkbox" value="1" name="is_available_now">
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
                                 </label>
-                                <button type="submit" class="btn btn-success btn-icon">
+
+                                <button type="submit" class="btn btn-sm btn-success btn-icon">
                                     <i class="tim-icons icon-send"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
+
                 </form>
 
-        </div>
+    <div class="col-lg-12 col-md-12">
 
-    <div class="col-md-12">
+        <div class="card card-tasks">
+
         <div class="card ">
             <div class="card-body ">
                 <div class="table-full-width table-responsive">
@@ -124,7 +129,8 @@
                                     <td class="text-center">
                                         Current: {{ $cs->charging_points->first()->type_of_electric_current }} <br>
                                         Plug: {{ $cs->charging_points->first()->plug_type }} <br>
-                                        Power: {{ $cs->charging_points->first()->power }}
+                                        Power: {{ $cs->charging_points->first()->power }} <br>
+                                        Rate per kWh: {{ $cs->charging_points->first()->rate_per_kwh }}
                                     </td>
                                     <td class="text-center">
                                         @if (count($cs->charging_points->first()->users) === 0)
@@ -139,7 +145,8 @@
                                         @elseif ($cs->number_of_charging_points === 2)
                                             Current: {{ $cs->charging_points->skip(1)->take(1)->first()->type_of_electric_current }} <br>
                                             Plug: {{ $cs->charging_points->skip(1)->take(1)->first()->plug_type }} <br>
-                                            Power: {{ $cs->charging_points->skip(1)->take(1)->first()->power }}
+                                            Power: {{ $cs->charging_points->skip(1)->take(1)->first()->power }} <br>
+                                            Rate per kWh: {{ $cs->charging_points->skip(1)->take(1)->first()->rate_per_kwh }}
                                         @endif
                                     </td>
                                     <td class="text-center">
@@ -176,5 +183,8 @@
                 </div>
             </div>
         </div>
+
+        </div>
+
     </div>
 @endsection

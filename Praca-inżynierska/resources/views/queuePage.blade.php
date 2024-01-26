@@ -36,16 +36,17 @@
 
         @if($charging_station->number_of_charging_points === 1)
 
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="card card-tasks">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-lg-10">
+                        <div class="w-85 m-auto">
                             <button type="button" class="btn btn-link" data-toggle="modal" data-target="#queueModal" >
                                 <h3 class="card-title">Enroll <i class="tim-icons icon-double-right text-success"></i></h3>
                             </button>
                         </div>
-                        <div class="col-lg-2">
+
+                        <div class="w-10">
                             <form method="post" action="{{ route('leave', $charging_station) }}">
                                 @csrf
                                 @method('delete')
@@ -73,24 +74,22 @@
                                         @csrf
                                         @method('post')
 
-                                        @include('alerts.success')
-
-                                        <input type="datetime-local" id="start_time" name="start_time" value="{{ Carbon\Carbon::now()->toDateTimeString() }}" min="{{ date('Y-m-dTH:i') }}" max="{{ date('Y-m-dTH:i') }}">
-                                        <input type="datetime-local" id="end_time" name="end_time" value="2024-01-01T00:00" min="{{ date('Y-m-dTH:i') }}" max="{{ date('Y-m-dTH:i') }}">
-
-                                        {{-- <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <input type="text" name="charging_start_time" class="form-control{{ $errors->has('charging_start_time') ? ' is-invalid' : '' }}" placeholder="{{ __('Charging start time') }}">
-                                                @include('alerts.feedback', ['field' => 'name'])
+                                        <div class="form-row">
+                                            <div class="w-50 m-auto">
+                                                <input type="datetime-local" id="start_time" name="start_time" value="{{ Carbon\Carbon::now()->setSeconds(0)->toDateTimeString() }}"
+                                                min="{{ Carbon\Carbon::now()->setSeconds(0)->addMinutes(5)->toDateTimeString() }}"
+                                                max="{{ Carbon\Carbon::now()->setSeconds(0)->addDay()->toDateTimeString() }}">
                                             </div>
-
-                                            <div class="form-group col-md-6">
-                                                <input type="text" name="charging_end_time" class="form-control{{ $errors->has('charging_end_time') ? ' is-invalid' : '' }}" placeholder="{{ __('Charging end time') }}">
-                                                @include('alerts.feedback', ['field' => 'name'])
+                                            <div class="w-35 m-auto">
+                                                <input type="datetime-local" id="end_time" name="end_time" value="{{ Carbon\Carbon::now()->setSeconds(0)->toDateTimeString() }}"
+                                                min="{{ Carbon\Carbon::now()->setSeconds(0)->addMinutes(15)->toDateTimeString() }}"
+                                                max="{{ Carbon\Carbon::now()->setSeconds(0)->addDay()->toDateTimeString() }}">
                                             </div>
-                                        </div> --}}
+                                        </div>
 
-                                        <button type="submit" class="btn btn-fill btn-primary">{{ __('Enroll!') }}</button>
+                                        <div class="w-25 m-auto">
+                                            <button type="submit" class="btn btn-fill btn-primary">{{ __('Enroll!') }}</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -209,24 +208,22 @@
                                         @csrf
                                         @method('post')
 
-                                        @include('alerts.success')
-
-                                        <input type="datetime-local" id="start_time" name="start_time" value="{{ Carbon\Carbon::now()->toDateTimeString() }}" min="{{ date('Y-m-dTH:i') }}" max="{{ date('Y-m-dTH:i') }}">
-                                        <input type="datetime-local" id="end_time" name="end_time" value="2024-01-01T00:00" min="{{ date('Y-m-dTH:i') }}" max="{{ date('Y-m-dTH:i') }}">
-
-                                        {{-- <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <input type="text" name="charging_start_time" class="form-control{{ $errors->has('charging_start_time') ? ' is-invalid' : '' }}" placeholder="{{ __('Charging start time') }}">
-                                                @include('alerts.feedback', ['field' => 'name'])
+                                        <div class="form-row">
+                                            <div class="w-50 m-auto">
+                                                <input type="datetime-local" id="start_time" name="start_time" value="{{ Carbon\Carbon::now()->setSeconds(0)->toDateTimeString() }}"
+                                                min="{{ Carbon\Carbon::now()->setSeconds(0)->addMinutes(5)->toDateTimeString() }}"
+                                                max="{{ Carbon\Carbon::now()->setSeconds(0)->addDay()->toDateTimeString() }}">
                                             </div>
-
-                                            <div class="form-group col-md-6">
-                                                <input type="text" name="charging_end_time" class="form-control{{ $errors->has('charging_end_time') ? ' is-invalid' : '' }}" placeholder="{{ __('Charging end time') }}">
-                                                @include('alerts.feedback', ['field' => 'name'])
+                                            <div class="w-35 m-auto">
+                                                <input type="datetime-local" id="end_time" name="end_time" value="{{ Carbon\Carbon::now()->setSeconds(0)->toDateTimeString() }}"
+                                                min="{{ Carbon\Carbon::now()->setSeconds(0)->addMinutes(15)->toDateTimeString() }}"
+                                                max="{{ Carbon\Carbon::now()->setSeconds(0)->addDay()->toDateTimeString() }}">
                                             </div>
-                                        </div> --}}
+                                        </div>
 
-                                        <button type="submit" class="btn btn-fill btn-primary">{{ __('Enroll!') }}</button>
+                                        <div class="w-30 m-auto">
+                                            <button type="submit" class="btn btn-fill btn-primary">{{ __('Enroll!') }}</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -343,24 +340,22 @@
                                         @csrf
                                         @method('post')
 
-                                        @include('alerts.success')
-
-                                        <input type="datetime-local" id="start_time2" name="start_time2" value="{{ Carbon\Carbon::now()->toDateTimeString() }}" min="{{ date('Y-m-dTH:i') }}" max="{{ date('Y-m-dTH:i') }}">
-                                        <input type="datetime-local" id="end_time2" name="end_time2" value="2024-01-01T00:00" min="{{ date('Y-m-dTH:i') }}" max="{{ date('Y-m-dTH:i') }}">
-
-                                        {{-- <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <input type="text" name="charging_start_time" class="form-control{{ $errors->has('charging_start_time') ? ' is-invalid' : '' }}" placeholder="{{ __('Charging start time') }}">
-                                                @include('alerts.feedback', ['field' => 'name'])
+                                        <div class="form-row">
+                                            <div class="w-50 m-auto">
+                                                <input type="datetime-local" id="start_time2" name="start_time2" value="{{ Carbon\Carbon::now()->setSeconds(0)->toDateTimeString() }}"
+                                                min="{{ Carbon\Carbon::now()->setSeconds(0)->addMinutes(5)->toDateTimeString() }}"
+                                                max="{{ Carbon\Carbon::now()->setSeconds(0)->addDay()->toDateTimeString() }}">
                                             </div>
-
-                                            <div class="form-group col-md-6">
-                                                <input type="text" name="charging_end_time" class="form-control{{ $errors->has('charging_end_time') ? ' is-invalid' : '' }}" placeholder="{{ __('Charging end time') }}">
-                                                @include('alerts.feedback', ['field' => 'name'])
+                                            <div class="w-35 m-auto">
+                                                <input type="datetime-local" id="end_time2" name="end_time2" value="{{ Carbon\Carbon::now()->setSeconds(0)->toDateTimeString() }}"
+                                                min="{{ Carbon\Carbon::now()->setSeconds(0)->addMinutes(15)->toDateTimeString() }}"
+                                                max="{{ Carbon\Carbon::now()->setSeconds(0)->addDay()->toDateTimeString() }}">
                                             </div>
-                                        </div> --}}
+                                        </div>
 
-                                        <button type="submit" class="btn btn-fill btn-primary">{{ __('Enroll!') }}</button>
+                                        <div class="w-30 m-auto">
+                                            <button type="submit" class="btn btn-fill btn-primary">{{ __('Enroll!') }}</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

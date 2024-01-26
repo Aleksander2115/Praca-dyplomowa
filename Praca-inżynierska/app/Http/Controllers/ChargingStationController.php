@@ -34,24 +34,43 @@ class ChargingStationController extends Controller
     public function filter(Request $request){
 
         $charStat = Charging_station::all()->where('is_verified','1');
+        $filter = collect();
 
+        if ($request->postcode != null && $request->is_available_now != null){
 
-        if($request->has('postcode'))
-            $filter = $charStat->where('postcode', $request->postcode);
+            foreach ($charStat as $cs){
 
-        if($request->is_available_now == 1){
-            foreach($charStat as $cs){
-
-                if(count($cs->charging_points) == 1){
-                    if(count($cs->charging_points->first()->users) == 0)
+                if (count($cs->charging_points) == 1 && $cs->postcode == $request->postcode){
+                    if (count($cs->charging_points->first()->users) == 0)
                         $filter->push($cs);
-                } else {
+                } else if (count($cs->charging_points) == 2 && $cs->postcode == $request->postcode) {
                     if (count($cs->charging_points->first()->users) == 0 || count($cs->charging_points->skip(1)->take(1)->first()->users) == 0)
                         $filter->push($cs);
                 }
             }
-        }
 
+        } else if ($request->postcode != null && $request->is_available_now == null){
+
+            $filter = $charStat->where('postcode', $request->postcode);
+
+        } else if ($request->postcode == null && $request->is_available_now != null){
+
+            if($request->is_available_now == 1){
+                foreach($charStat as $cs){
+
+                    if(count($cs->charging_points) == 1){
+                        if(count($cs->charging_points->first()->users) == 0)
+                            $filter->push($cs);
+                    } else {
+                        if (count($cs->charging_points->first()->users) == 0 || count($cs->charging_points->skip(1)->take(1)->first()->users) == 0)
+                            $filter->push($cs);
+                    }
+                }
+            }
+
+        } else if ($request->postcode == null && $request->is_available_now == null){
+            return back();
+        }
 
         return view('userPage', ['charStat'=>$filter]);
     }

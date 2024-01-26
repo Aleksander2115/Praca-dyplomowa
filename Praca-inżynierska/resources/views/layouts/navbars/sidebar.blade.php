@@ -4,7 +4,7 @@
             @if (Auth::user()->roles()->where('role_name', 'user')->exists())
 
                 @if (Auth::user()->cars()->where('in_use','1')->exists())
-                    <a class="simple-text logo-normal">Car in use: {{ Auth::user()->cars->where('in_use','1')->first()->brand }}
+                    <a class="simple-text logo-normal">Car in use: <br>{{ Auth::user()->cars->where('in_use','1')->first()->brand }}
                         {{ Auth::user()->cars->where('in_use','1')->first()->model }}
                         {{ Auth::user()->cars->where('in_use','1')->first()->licence_plate_num }}
                     </a>
@@ -26,43 +26,56 @@
         </div>
         <ul class="nav">
             @if (Auth::user()->roles()->where('role_name', 'user')->exists())
-                <li class="active ">
+                <li @if ($pageSlug == 'userPage') class="active " @endif>
                     <a href="{{ route('userPage') }}">
                         <i class="tim-icons icon-bank"></i>
                         <p>{{ __('Home') }}</p>
                     </a>
                 </li>
 
-                <li class="active ">
+                <li @if ($pageSlug == 'userCars') class="active " @endif>
                     <a href="{{ route('userCars') }}">
                         <i class="tim-icons icon-bus-front-12"></i>
                         <p>{{ __('Cars') }}</p>
                     </a>
                 </li>
 
-                <li class="active ">
+                <li @if ($pageSlug == 'addStationView') class="active " @endif>
                     <a href="{{ route('addStationView') }}">
                         <i class="tim-icons icon-simple-add"></i>
                         <p>{{ __('Suggest Station') }}</p>
                     </a>
                 </li>
+
+                <li @if ($pageSlug == 'terms') class="active " @endif>
+                    <a href="{{ route('termsPage') }}">
+                        <i class="tim-icons icon-alert-circle-exc"></i>
+                        <p>{{ __('Terms and regulations') }}</p>
+                    </a>
+                </li>
             @elseif (Auth::user()->roles()->where('role_name', 'mod')->exists())
-                <li class="active ">
+                <li @if ($pageSlug == 'modPage') class="active " @endif>
                     <a href="{{ route('modPage') }}">
                         <i class="tim-icons icon-bank"></i>
                         <p>{{ __('Home') }}</p>
                     </a>
                 </li>
-                <li class="active ">
+                <li @if ($pageSlug == 'addStationView') class="active " @endif>
                     <a href="{{ route('addStationView') }}">
                         <i class="tim-icons icon-simple-add"></i>
                         <p>{{ __('Add Station') }}</p>
                     </a>
                 </li>
-                <li class="active ">
+                <li @if ($pageSlug == 'station_requests') class="active " @endif>
                     <a href="{{ route('station_requests') }}">
                         <i class="tim-icons icon-simple-add"></i>
                         <p>{{ __('Requests') }}</p>
+                    </a>
+                </li>
+                <li @if ($pageSlug == 'terms') class="active " @endif>
+                    <a href="{{ route('termsPage') }}">
+                        <i class="tim-icons icon-alert-circle-exc"></i>
+                        <p>{{ __('Terms and regulations') }}</p>
                     </a>
                 </li>
             @endif

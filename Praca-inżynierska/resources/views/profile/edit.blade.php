@@ -65,7 +65,7 @@
                 </form>
             </div>
         </div>
-        <div class="col-md-4">
+        {{-- <div class="col-md-4">
             <div class="card card-user">
                 <div class="card-body">
                     <p class="card-text">
@@ -101,6 +101,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection

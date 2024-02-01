@@ -6,7 +6,7 @@
         <div class="container">
             <div class="header-body text-center mb-7">
                 <div class="row justify-content-center">
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-12 col-md-12">
                         <h1 class="text-white">{{ __('List of available charging stations') }}</h1>
                     </div>
                 </div>
@@ -36,14 +36,14 @@
                     @csrf
                     @method('post')
 
-                    <div class="row w-35 m-auto">
-                        <div class="w-30 m-auto">
+                    <div class="row w-100 m-auto">
+                        <div class="form-group col-md-4">
                             <label>
                                 <font color="#ff00ff"> FILTER BY POSTCODE</font>
                             </label>
                             <input type="text" name="postcode" class="form-control" placeholder="Postcode 00-000">
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group">
                             <label> <font color="#ff00ff"> SHOW AVAILABLE</font> </label>
 
                             <div class="form-check">
@@ -53,11 +53,20 @@
                                         <span class="check"></span>
                                     </span>
                                 </label>
-
-                                <button type="submit" class="btn btn-sm btn-success btn-icon">
-                                    <i class="tim-icons icon-send"></i>
-                                </button>
                             </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label> <font color="#ff00ff">FILTER BY PLUG TYPE</font> </label>
+                            <select class="form-control" id="plug_type" name="plug_type">
+                                <option value="">-</option>
+                                <option value="X">X</option>
+                                <option value="D">D</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <button type="submit" class="btn btn-lg btn-success btn-icon">
+                                <i class="tim-icons icon-send"></i>
+                            </button>
                         </div>
                     </div>
 

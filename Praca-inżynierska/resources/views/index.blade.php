@@ -49,9 +49,9 @@
 				<section id="banner">
 					<div class="content">
 						<header>
-							<h2>The future has landed</h2>
-							<p>And there are no hoverboards or flying cars.<br />
-							Just apps. Lots of mother flipping apps.</p>
+							<h2>Web application for electric <br> car charging station network</h2>
+							{{-- <p>And there are no hoverboards or flying cars.<br />
+							Just apps. Lots of mother flipping apps.</p> --}}
 						</header>
 						<span class="image"><img src="{{ asset('assets/images/ladowanie.jpg') }}" alt="" /></span>
 					</div>
@@ -96,9 +96,9 @@
 					<div class="content">
 						<header>
 							<h2>Charging stations</h2>
-							<p>Nunc commodo accumsan eget id nisi eu col volutpat magna</p>
+							<p>Ability to get detailed information about a specific charging station including availability and queue occupancy</p>
 						</header>
-						<p>Feugiat accumsan lorem eu ac lorem amet ac arcu phasellus tortor enim mi mi nisi praesent adipiscing. Integer mi sed nascetur cep aliquet augue varius tempus lobortis porttitor lorem et accumsan consequat adipiscing lorem.</p>
+						{{-- <p>Feugiat accumsan lorem eu ac lorem amet ac arcu phasellus tortor enim mi mi nisi praesent adipiscing. Integer mi sed nascetur cep aliquet augue varius tempus lobortis porttitor lorem et accumsan consequat adipiscing lorem.</p> --}}
 						<ul class="actions">
                             @if (Auth::check())
 							    <li><a href="#" class="button">Learn More</a></li>
@@ -116,9 +116,9 @@
 					<div class="content">
 						<header>
 							<h2>Cars</h2>
-							<p>Accumsan integer ultricies aliquam vel massa sapien phasellus</p>
+							<p>The ability to add a large number of cars and select the one currently in use, without which the main functionality of the application cannot be used</p>
 						</header>
-						<p>Feugiat accumsan lorem eu ac lorem amet ac arcu phasellus tortor enim mi mi nisi praesent adipiscing. Integer mi sed nascetur cep aliquet augue varius tempus lobortis porttitor lorem et accumsan consequat adipiscing lorem.</p>
+						{{-- <p>Feugiat accumsan lorem eu ac lorem amet ac arcu phasellus tortor enim mi mi nisi praesent adipiscing. Integer mi sed nascetur cep aliquet augue varius tempus lobortis porttitor lorem et accumsan consequat adipiscing lorem.</p> --}}
 						<ul class="actions">
 							@if (Auth::check())
 							    <li><a href="#" class="button">Learn More</a></li>
@@ -136,9 +136,9 @@
 					<div class="content">
 						<header>
 							<h2>Term and regulations</h2>
-							<p>Nunc commodo accumsan eget id nisi eu col volutpat magna</p>
+							<p>Simple and clear application regulations</p>
 						</header>
-						<p>Feugiat accumsan lorem eu ac lorem amet ac arcu phasellus tortor enim mi mi nisi praesent adipiscing. Integer mi sed nascetur cep aliquet augue varius tempus lobortis porttitor lorem et accumsan consequat adipiscing lorem.</p>
+						{{-- <p>Feugiat accumsan lorem eu ac lorem amet ac arcu phasellus tortor enim mi mi nisi praesent adipiscing. Integer mi sed nascetur cep aliquet augue varius tempus lobortis porttitor lorem et accumsan consequat adipiscing lorem.</p> --}}
 						<ul class="actions">
                             @if (Auth::check())
 							    <li><a href="#" class="button">Learn More</a></li>
@@ -151,7 +151,7 @@
 				</section>
 
 			<!-- Four -->
-				<section id="four" class="wrapper style1 special fade-up">
+				{{-- <section id="four" class="wrapper style1 special fade-up">
 					<div class="container">
 						<header class="major">
 							<h2>Accumsan sed tempus adipiscing blandit</h2>
@@ -197,10 +197,10 @@
 							</ul>
 						</footer>
 					</div>
-				</section>
+				</section> --}}
 
 			<!-- Five -->
-				<section id="five" class="wrapper style2 special fade">
+				{{-- <section id="five" class="wrapper style2 special fade">
 					<div class="container">
 						<header>
 							<h2>Magna faucibus lorem diam</h2>
@@ -213,18 +213,18 @@
 							</div>
 						</form>
 					</div>
-				</section>
+				</section> --}}
 
 			<!-- Footer -->
 				<footer id="footer">
-					<ul class="icons">
+					{{-- <ul class="icons">
 						<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
 						<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
 						<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
 						<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
 						<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
 						<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-					</ul>
+					</ul> --}}
 					<ul class="copyright">
 						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 					</ul>

@@ -127,9 +127,9 @@
                         <li class="nav-link">
                             <a href="{{ route('profile.edit') }}" class="nav-item dropdown-item">{{ __('Profile') }}</a>
                         </li>
-                        <li class="nav-link">
+                        {{-- <li class="nav-link">
                             <a href="#" class="nav-item dropdown-item">{{ __('Settings') }}</a>
-                        </li>
+                        </li> --}}
                         <li class="dropdown-divider"></li>
                         <li class="nav-link">
                             <a href="{{ route('logout') }}" class="nav-item dropdown-item" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">{{ __('Log out') }}</a>
@@ -141,7 +141,7 @@
         </div>
     </div>
 </nav>
-<div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+{{-- <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -152,4 +152,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}

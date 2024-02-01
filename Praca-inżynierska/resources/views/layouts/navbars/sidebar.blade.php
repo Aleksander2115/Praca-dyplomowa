@@ -79,7 +79,7 @@
                     </a>
                 </li>
             @endif
-            <li @if ($pageSlug == 'dashboard') class="active " @endif>
+            {{-- <li @if ($pageSlug == 'dashboard') class="active " @endif>
                 <a href="{{ route('home') }}">
                     <i class="tim-icons icon-chart-pie-36"></i>
                     <p>{{ __('Dashboard') }}</p>
@@ -150,7 +150,7 @@
                     <i class="tim-icons icon-spaceship"></i>
                     <p>{{ __('Upgrade to PRO') }}</p>
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </div>

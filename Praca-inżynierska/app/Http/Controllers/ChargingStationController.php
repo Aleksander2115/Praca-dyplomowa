@@ -36,24 +36,24 @@ class ChargingStationController extends Controller
         $charStat = Charging_station::all()->where('is_verified','1');
         $filter = collect();
 
-        if ($request->postcode != null && $request->is_available_now != null){
+        if ($request->postcode != null && $request->is_available_now != null &&  $request->plug_type != null){
 
             foreach ($charStat as $cs){
 
                 if (count($cs->charging_points) == 1 && $cs->postcode == $request->postcode){
-                    if (count($cs->charging_points->first()->users) == 0)
+                    if (count($cs->charging_points->first()->users) == 0 && $cs->charging_points->first()->plug_type == $request->plug_type)
                         $filter->push($cs);
                 } else if (count($cs->charging_points) == 2 && $cs->postcode == $request->postcode) {
-                    if (count($cs->charging_points->first()->users) == 0 || count($cs->charging_points->skip(1)->take(1)->first()->users) == 0)
+                    if (count($cs->charging_points->first()->users) == 0 || count($cs->charging_points->skip(1)->take(1)->first()->users) == 0 && $cs->charging_points->first()->plug_type == $request->plug_type || $cs->charging_points->skip(1)->take(1)->first()->plug_type == $request->plug_type)
                         $filter->push($cs);
                 }
             }
 
-        } else if ($request->postcode != null && $request->is_available_now == null){
+        } else if ($request->postcode != null && $request->is_available_now == null &&  $request->plug_type == null){
 
             $filter = $charStat->where('postcode', $request->postcode);
 
-        } else if ($request->postcode == null && $request->is_available_now != null){
+        } else if ($request->postcode == null && $request->is_available_now != null &&  $request->plug_type == null){
 
             if($request->is_available_now == 1){
                 foreach($charStat as $cs){
@@ -65,6 +65,18 @@ class ChargingStationController extends Controller
                         if (count($cs->charging_points->first()->users) == 0 || count($cs->charging_points->skip(1)->take(1)->first()->users) == 0)
                             $filter->push($cs);
                     }
+                }
+            }
+
+        } else if ($request->plug_type != null && $request->postcode == null && $request->is_available_now == null){
+
+            foreach ($charStat as $cs) {
+                if (count($cs->charging_points) == 1){
+                    if ($cs->charging_points->first()->plug_type == $request->plug_type)
+                        $filter->push($cs);
+                } else {
+                    if ($cs->charging_points->first()->plug_type == $request->plug_type || $cs->charging_points->skip(1)->take(1)->first()->plug_type == $request->plug_type)
+                        $filter->push($cs);
                 }
             }
 

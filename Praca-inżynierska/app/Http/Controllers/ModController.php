@@ -25,7 +25,7 @@ class ModController extends Controller
             'term' => $request->term
         ]);
 
-        return back()->with('status', 'Term/requlation successfully added');
+        return back()->with('status', 'Term/regulation successfully added');
     }
 
     public function editTerm(Term $term, Request $request){
@@ -34,13 +34,13 @@ class ModController extends Controller
             'term' => $request->term
         ]);
 
-        return back()->with('status', 'Term/requlation successfully edited');
+        return back()->with('status', 'Term/regulation successfully edited');
     }
 
     public function deleteTerm(Term $term){
 
         $term->delete();
 
-        return back()->with('status', 'Term/requlation successfully deleted');
+        return back()->with('status', 'Term/regulation successfully deleted');
     }
 }

@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use App\Models\Charging_station;
 use App\Models\Charging_point;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Builder;
 
 use Auth;
 
@@ -31,60 +32,24 @@ class ChargingStationController extends Controller
         return view('pages.charging_station');
     }
 
-    public function filter(Request $request){
+    public function filter(Request $request, Charging_station $charging_station){
 
-        $charStat = Charging_station::all()->where('is_verified','1');
-        $filter = collect();
+        $charStat = Charging_station::all()->where('is_verified', '1');
+        $charging_station = $charging_station->newQuery();
 
-        if ($request->postcode != null && $request->is_available_now != null &&  $request->plug_type != null){
-
-            foreach ($charStat as $cs){
-
-                if (count($cs->charging_points) == 1 && $cs->postcode == $request->postcode){
-                    if (count($cs->charging_points->first()->users) == 0 && $cs->charging_points->first()->plug_type == $request->plug_type)
-                        $filter->push($cs);
-                } else if (count($cs->charging_points) == 2 && $cs->postcode == $request->postcode) {
-                    if (count($cs->charging_points->first()->users) == 0 || count($cs->charging_points->skip(1)->take(1)->first()->users) == 0 && $cs->charging_points->first()->plug_type == $request->plug_type || $cs->charging_points->skip(1)->take(1)->first()->plug_type == $request->plug_type)
-                        $filter->push($cs);
-                }
-            }
-
-        } else if ($request->postcode != null && $request->is_available_now == null &&  $request->plug_type == null){
-
-            $filter = $charStat->where('postcode', $request->postcode);
-
-        } else if ($request->postcode == null && $request->is_available_now != null &&  $request->plug_type == null){
-
-            if($request->is_available_now == 1){
-                foreach($charStat as $cs){
-
-                    if(count($cs->charging_points) == 1){
-                        if(count($cs->charging_points->first()->users) == 0)
-                            $filter->push($cs);
-                    } else {
-                        if (count($cs->charging_points->first()->users) == 0 || count($cs->charging_points->skip(1)->take(1)->first()->users) == 0)
-                            $filter->push($cs);
-                    }
-                }
-            }
-
-        } else if ($request->plug_type != null && $request->postcode == null && $request->is_available_now == null){
-
-            foreach ($charStat as $cs) {
-                if (count($cs->charging_points) == 1){
-                    if ($cs->charging_points->first()->plug_type == $request->plug_type)
-                        $filter->push($cs);
-                } else {
-                    if ($cs->charging_points->first()->plug_type == $request->plug_type || $cs->charging_points->skip(1)->take(1)->first()->plug_type == $request->plug_type)
-                        $filter->push($cs);
-                }
-            }
-
-        } else if ($request->postcode == null && $request->is_available_now == null){
-            return back();
+        if ($request->postcode != null) {
+            $charging_station->where('postcode', $request->input('postcode'));
         }
 
-        return view('userPage', ['charStat'=>$filter]);
+        if ($request->plug_type != null){
+            $charging_station->whereRelation('charging_points', 'plug_type', $request->input('plug_type'))->get();
+        }
+
+        if ($request->is_available_now != null) {
+            $charging_station->doesntHave('charging_points.users')->get();
+        }
+
+        return view('userPage', ['charStat'=>$charging_station->get()]);
     }
 
     public function addStation(Charging_station $charging_station, Charging_point $charging_point, Request $request){
@@ -163,7 +128,7 @@ class ChargingStationController extends Controller
 
                 $charging_station->charging_points()->attach($charging_point->id);
 
-            } else if($request->number_of_charging_points == 2) {
+            } else if($request->number_of_charging_points == 2){
                 $charging_point = Charging_point::create([
                     'type_of_electric_current' => $request->type_of_electric_current,
                     'plug_type' => $request->plug_type,
@@ -193,20 +158,6 @@ class ChargingStationController extends Controller
     }
 
     public function updateStation(Charging_station $charging_station, Request $request){
-
-        // $validator = Validator::make($request->all(), [
-        //     'postcode' => 'required|regex:/^[0-9]{2}-[0-9]{3}/',
-        //     'city' => 'required|string|min:3',
-        //     'street' => 'required|min:3',
-        //     'street_number' => 'required',
-        // ],
-        // [
-        //     'postcode.regex' => 'The postcode must be in 00-000 format'
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return back()->withErrors($validator)->withInput();
-        // }
 
         $charging_station->update([
             'postcode' => $request->postcode,

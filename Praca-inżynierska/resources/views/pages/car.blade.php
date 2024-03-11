@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
                 <h3 class="title">{{ __('Add a car') }}</h3>

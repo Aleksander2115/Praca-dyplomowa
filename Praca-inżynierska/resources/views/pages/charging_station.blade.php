@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-lg-12">
         <div class="card">
             @if (Auth::user()->roles()->where('role_name', 'user')->exists())
                 <div class="card-header">
